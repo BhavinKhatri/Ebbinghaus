@@ -1,13 +1,12 @@
 import { IMemory, IStatefulMemory, IUpdatMemory } from '../interfaces/IMemory';
 
-export class PersistentMemory implements IStatefulMemory {
+export class PersistentMemory<T> implements IStatefulMemory<T> {
   id: string;
   revisionCounts: number;
   createdAt: number;
-  memory: string;
+  memory: T;
   revisionHistory: Date[];
-  constructor(mem: IMemory) {
-    this.id = '1';
+  constructor(mem: IMemory<T>) {
     this.revisionCounts = 0;
     this.createdAt = mem.createdAt;
     this.memory = mem.memory;
@@ -15,8 +14,8 @@ export class PersistentMemory implements IStatefulMemory {
   }
 }
 
-export class MemoryModifier implements IUpdatMemory {
-  constructor(private persistentMemory: IStatefulMemory) {}
+export class MemoryModifier<T> implements IUpdatMemory {
+  constructor(private persistentMemory: IStatefulMemory<T>) {}
   updateRevisionCount(date: Date) {
     this.persistentMemory.revisionCounts += 1;
     this.persistentMemory.revisionHistory.push(date);

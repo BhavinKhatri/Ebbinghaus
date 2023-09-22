@@ -5,3 +5,5 @@ export interface IPaceRepeatedAlgorithm {
     memories: IPaceRepeatedMemory[],
   ) => IPaceRepeatedMemory[];
 }
+
+export const IPaceRepeatedAlgorithm = Symbol('IPaceRepeatedAlgorithm');

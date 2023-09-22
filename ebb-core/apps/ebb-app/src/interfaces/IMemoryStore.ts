@@ -1,8 +1,8 @@
 import { IMemory, IStatefulMemory } from './IMemory';
 
-export interface IMemoryStore {
-  add: (memory: IMemory) => IStatefulMemory;
-  getAllMemories: () => IStatefulMemory[];
-  getMemoryById: (id: string) => IStatefulMemory;
-  updateMemory: (sm: IStatefulMemory) => IStatefulMemory;
+export interface IMemoryStore<T> {
+  add: (memory: IMemory<T>) => IStatefulMemory<T>;
+  getAllMemories: () => IStatefulMemory<T>[];
+  getMemoryById: (id: string) => IStatefulMemory<T>;
+  updateMemory: (sm: IStatefulMemory<T>) => IStatefulMemory<T>;
 }

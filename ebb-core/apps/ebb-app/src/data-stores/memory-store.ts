@@ -2,8 +2,8 @@ import { PersistentMemory } from '../classes/PersistentMemory';
 import { IMemory, IStatefulMemory } from '../interfaces/IMemory';
 import { IMemoryStore } from '../interfaces/IMemoryStore';
 
-export class MemoryArrayStore implements IMemoryStore {
-  updateMemory(sm: IStatefulMemory) {
+export class MemoryArrayStore<T> implements IMemoryStore<T> {
+  updateMemory(sm: IStatefulMemory<T>) {
     this.memoryList.forEach((m) => {
       if (m.id === sm.id) {
         m.revisionCounts = sm.revisionCounts;
@@ -12,9 +12,10 @@ export class MemoryArrayStore implements IMemoryStore {
     });
     return sm;
   }
-  private memoryList: IStatefulMemory[] = [];
-  add(memory: IMemory) {
+  private memoryList: IStatefulMemory<T>[] = [];
+  add(memory: IMemory<T>) {
     const pm = new PersistentMemory(memory);
+    pm.id = this.memoryList.length.toString();
     this.memoryList.push(pm);
     return pm;
   }

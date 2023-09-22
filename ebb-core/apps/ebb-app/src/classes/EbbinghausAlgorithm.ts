@@ -1,10 +1,9 @@
 import { IPaceRepeatedAlgorithm } from '../interfaces/IPaceRepeatedAlgorithm';
-import { PersistentMemory } from './PersistentMemory';
-import * as utc from 'dayjs/plugin/utc';
-import * as dayjs from 'dayjs';
 import { IPaceRepeatedMemory } from '../interfaces/IMemory';
-dayjs.extend(utc);
+import { DateService } from '../utils/date/date.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class EbbinghausAlgorithm implements IPaceRepeatedAlgorithm {
   /// revision counts
   /// 0 - Day of starting 18
@@ -15,27 +14,17 @@ export class EbbinghausAlgorithm implements IPaceRepeatedAlgorithm {
   /// 5 - Skip 5 days after previous day - Total 13 days after starting days
   /// 6 - Skip 8 days after previous day, Total 21 days after starting days
   /// 7 - Skip 13 days after previous day Total - days after starting days
+  constructor(private dateService: DateService) {}
   private paceSequenceInDays = [0, 1, 2, 5, 8, 13, 21];
   getMemoriesForRepeatation(memories: IPaceRepeatedMemory[]) {
     return memories.filter((m) => {
       if (this.paceSequenceInDays.length > m.revisionCounts) {
         const daysToSkipFromCreatedDate =
           this.paceSequenceInDays[m.revisionCounts];
-        const utcCreatedDate = dayjs(new Date(m.createdAt));
-        console.log('utcCreatedDate');
-        console.log(utcCreatedDate);
-        const utcDateAfterSkip = utcCreatedDate.add(
-          daysToSkipFromCreatedDate + 1,
-          'day',
+        const isSameDay = this.dateService.isSameDateAfterSkip(
+          m.createdAt,
+          daysToSkipFromCreatedDate,
         );
-        const todayAsUtc = dayjs.utc();
-        console.log('todayAsUtc');
-        console.log(todayAsUtc);
-        console.log('utcDateAfterSkip');
-        console.log(utcDateAfterSkip);
-        const isSameDay = todayAsUtc.isSame(utcDateAfterSkip, 'day');
-        console.log('isSameDay');
-        console.log(isSameDay);
         return isSameDay;
       }
       return false;

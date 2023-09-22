@@ -4,13 +4,13 @@ export interface IPaceRepeatedMemory {
   createdAt: number;
 }
 
-export interface IMemory {
-  memory: string;
+export interface IMemory<T> {
+  memory: T;
   /// UTC numbner
   createdAt: number;
 }
 
-export interface IStatefulMemory extends IMemory, IPaceRepeatedMemory {
+export interface IStatefulMemory<T> extends IMemory<T>, IPaceRepeatedMemory {
   id: string;
   revisionHistory: Date[];
 }

@@ -4,7 +4,7 @@ import { IMemory } from './interfaces/IMemory';
 
 @Controller()
 export class EbbAppController {
-  constructor(private readonly ebbAppService: EbbAppService) {}
+  constructor(private readonly ebbAppService: EbbAppService<string>) {}
 
   @Get()
   getHello(): string {
@@ -14,7 +14,7 @@ export class EbbAppController {
       today.getUTCMonth(),
       today.getUTCDate(),
     );
-    const memory: IMemory = {
+    const memory: IMemory<string> = {
       createdAt: utcDateForToday,
       memory: 'I want to remember this.',
     };
