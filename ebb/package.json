@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.1.0",
     "@angular/animations": "~16.2.0",
     "@angular/common": "~16.2.0",
     "@angular/compiler": "~16.2.0",
@@ -39,7 +40,7 @@
     "@nx/workspace": "16.8.1",
     "@schematics/angular": "~16.2.0",
     "@types/jest": "^29.4.0",
-    "@types/node": "16.11.7",
+    "@types/node": "^16.18.54",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "eslint": "~8.46.0",

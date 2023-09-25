@@ -24,6 +24,15 @@
             "windows": {
                 "program": "${workspaceFolder}/node_modules/jest/bin/jest"
             }
-        }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach NestJS WS",
+            "port": 9229,
+            "restart": true,
+            "stopOnEntry": false,
+            "protocol": "inspector"
+          }
     ]
 }
