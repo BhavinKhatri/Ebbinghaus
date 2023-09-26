@@ -7,7 +7,6 @@ import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { GoogleStrategy } from './auth/google.strategy';
 
 @Module({
   imports: [AuthModule, UsersModule, ConfigModule.forRoot()],
@@ -19,7 +18,6 @@ import { GoogleStrategy } from './auth/google.strategy';
       provide: IPaceRepeatedAlgorithm,
       useClass: EbbinghausAlgorithm,
     },
-    GoogleStrategy,
   ],
 })
 export class EbbAppModule {}

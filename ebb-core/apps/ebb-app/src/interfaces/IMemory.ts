@@ -18,3 +18,7 @@ export interface IStatefulMemory<T> extends IMemory<T>, IPaceRepeatedMemory {
 export interface IUpdatMemory {
   updateRevisionCount: (date: Date) => void;
 }
+
+export interface IUsersMemory<T> extends IStatefulMemory<T> {
+  userId: string;
+}

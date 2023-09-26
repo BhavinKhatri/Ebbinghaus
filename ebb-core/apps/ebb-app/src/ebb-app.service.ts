@@ -16,16 +16,13 @@ export class EbbAppService<T> {
   ) {
     this.memoryStore = new MemoryArrayStore();
   }
-  getHello(): string {
-    return 'Hello World!';
+
+  create(memory: IMemory<T>, userId: string) {
+    this.memoryStore.add(memory, userId);
   }
 
-  create(memory: IMemory<T>) {
-    this.memoryStore.add(memory);
-  }
-
-  getMemories() {
-    const allMemories = this.memoryStore.getAllMemories();
+  getMemories(userId: string) {
+    const allMemories = this.memoryStore.getAllMemories(userId);
     return this.paceRepeatedAlgorithm.getMemoriesForRepeatation(allMemories);
   }
 

@@ -1,4 +1,4 @@
-import { PersistentMemory } from '../classes/PersistentMemory';
+import { UsersMemory } from '../classes/PersistentMemory';
 import { IMemory, IStatefulMemory } from '../interfaces/IMemory';
 import { IMemoryStore } from '../interfaces/IMemoryStore';
 
@@ -12,16 +12,16 @@ export class MemoryArrayStore<T> implements IMemoryStore<T> {
     });
     return sm;
   }
-  private memoryList: IStatefulMemory<T>[] = [];
-  add(memory: IMemory<T>) {
-    const pm = new PersistentMemory(memory);
-    pm.id = this.memoryList.length.toString();
-    this.memoryList.push(pm);
-    return pm;
+  private memoryList: UsersMemory<T>[] = [];
+  add(memory: IMemory<T>, userId: string) {
+    const um = new UsersMemory(memory, userId);
+    um.id = this.memoryList.length.toString();
+    this.memoryList.push(um);
+    return um;
   }
 
-  getAllMemories() {
-    return this.memoryList;
+  getAllMemories(userId: string) {
+    return this.memoryList.filter((m) => m.userId === userId);
   }
 
   getMemoryById(id: string) {

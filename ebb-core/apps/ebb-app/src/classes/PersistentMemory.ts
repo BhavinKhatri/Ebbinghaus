@@ -1,4 +1,9 @@
-import { IMemory, IStatefulMemory, IUpdatMemory } from '../interfaces/IMemory';
+import {
+  IMemory,
+  IStatefulMemory,
+  IUpdatMemory,
+  IUsersMemory,
+} from '../interfaces/IMemory';
 
 export class PersistentMemory<T> implements IStatefulMemory<T> {
   id: string;
@@ -11,6 +16,17 @@ export class PersistentMemory<T> implements IStatefulMemory<T> {
     this.createdAt = mem.createdAt;
     this.memory = mem.memory;
     this.revisionHistory = [];
+  }
+}
+
+export class UsersMemory<T>
+  extends PersistentMemory<T>
+  implements IUsersMemory<T>
+{
+  userId: string;
+  constructor(memory: IMemory<T>, userId: string) {
+    super(memory);
+    this.userId = userId;
   }
 }
 

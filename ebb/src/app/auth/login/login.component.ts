@@ -30,8 +30,4 @@ export class LoginComponent {
       this.loginService.userSubject.next(user);
     });
   }
-
-  login() {
-    console.log("login");
-  }
 }

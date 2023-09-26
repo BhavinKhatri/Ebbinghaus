@@ -1,13 +1,15 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { EbbAppService } from './ebb-app.service';
 import { IMemory } from './interfaces/IMemory';
+import { AuthGuard } from './auth/auth.guard';
 
-@Controller()
+@Controller('memory')
 export class EbbAppController {
   constructor(private readonly ebbAppService: EbbAppService<string>) {}
 
-  @Get()
-  getHello(): string {
+  @UseGuards(AuthGuard)
+  @Post('create')
+  createMemory(@Request() req): string {
     const today = new Date();
     const utcDateForToday = Date.UTC(
       today.getUTCFullYear(),
@@ -18,15 +20,17 @@ export class EbbAppController {
       createdAt: utcDateForToday,
       memory: 'I want to remember this.',
     };
-    this.ebbAppService.create(memory);
-    return this.ebbAppService.getHello();
+    this.ebbAppService.create(memory, req.userId);
+    return 'Hi';
   }
 
-  @Get()
-  revisionForToday() {
-    return this.ebbAppService.getMemories();
+  @UseGuards(AuthGuard)
+  @Get('revision-today')
+  revisionForToday(@Request() req) {
+    return this.ebbAppService.getMemories(req.userId);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   revisionCompleted(memoryId: string) {
     this.ebbAppService.revisionComplete(memoryId);
