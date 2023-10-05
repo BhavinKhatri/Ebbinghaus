@@ -1,11 +1,19 @@
 import { Controller, UseGuards, Request, Get } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
+import { UsersService } from '../users/users.service';
 
 @Controller('auth')
 export class AuthController {
+  constructor(private userService: UsersService) {}
   @Get('user')
   @UseGuards(AuthGuard)
-  googleAuthRedirect(@Request() req) {
+  async googleAuthRedirect(@Request() req) {
+    const user = await this.userService.findOne(req.userId);
+    if (!user) {
+      this.userService.addUser({
+        userId: req.userId,
+      });
+    }
     return req.userId;
   }
 }

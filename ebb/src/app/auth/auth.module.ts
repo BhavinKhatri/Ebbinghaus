@@ -2,18 +2,15 @@ import { NgModule } from '@angular/core';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { SocialLoginModule } from '@abacritt/angularx-social-login';
 import {
-  GoogleLoginProvider
+  SocialLoginModule,
+  GoogleLoginProvider,
 } from '@abacritt/angularx-social-login';
-import { Environment } from '../../environments/environment'
+import { Environment } from '../../environments/environment';
+import { httpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
-  imports: [
-    AuthRoutingModule,
-    SharedModule,
-    SocialLoginModule
-  ],
+  imports: [AuthRoutingModule, SharedModule, SocialLoginModule],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
@@ -22,12 +19,12 @@ import { Environment } from '../../environments/environment'
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              Environment.GOOGLE_CLIENT_ID
-            )
+            provider: new GoogleLoginProvider(Environment.GOOGLE_CLIENT_ID),
           },
-        ]
-      }
-    }]
+        ],
+      },
+    },
+    httpInterceptorProviders,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

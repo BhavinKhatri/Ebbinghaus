@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IMemory } from './interfaces/IMemory';
+import { IMemory, IStatefulMemory } from './interfaces/IMemory';
 import { MemoryModifier } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
 import { MemoryArrayStore } from './data-stores/memory-store';
@@ -21,9 +21,11 @@ export class EbbAppService<T> {
     this.memoryStore.add(memory, userId);
   }
 
-  getMemories(userId: string) {
+  getMemories(userId: string): IStatefulMemory<T>[] {
     const allMemories = this.memoryStore.getAllMemories(userId);
-    return this.paceRepeatedAlgorithm.getMemoriesForRepeatation(allMemories);
+    return this.paceRepeatedAlgorithm.getMemoriesForRepeatation(
+      allMemories,
+    ) as IStatefulMemory<T>[];
   }
 
   revisionComplete(persistentMemoryId: string) {
