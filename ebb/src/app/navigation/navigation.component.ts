@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,15 +23,19 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     RouterModule,
     CommonModule,
+    RouterModule,
   ],
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
-
+  constructor(private router: Router) {}
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
       map((result) => result.matches),
       shareReplay()
     );
+  goToLogin() {
+    this.router.navigate(['auth']);
+  }
 }

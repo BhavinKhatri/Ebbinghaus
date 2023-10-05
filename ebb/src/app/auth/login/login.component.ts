@@ -8,10 +8,11 @@ import { Environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { LocalStorageService } from 'src/app/local-storage.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   standalone: true,
-  imports: [SharedModule, HttpClientModule],
+  imports: [SharedModule, HttpClientModule, MatDividerModule],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

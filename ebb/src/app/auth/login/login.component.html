@@ -1,7 +1,20 @@
-<div id="g_id_onload" [attr.data-client_id]="clientId" data-context="signin" data-ux_mode="popup"
-     [attr.data-login_uri]="loginURI" data-auto_prompt="false" data-callback="login">
-</div>
+<mat-card class="example-card">
+     <mat-card-header>
+          <mat-card-title><h1>Welcome!</h1></mat-card-title>
+          <mat-card-subtitle><h2>Login to get started ...</h2></mat-card-subtitle>
+     </mat-card-header>
+     <mat-card-content>
+          <p>Login using Google.</p>
+          <mat-divider></mat-divider>
+     </mat-card-content>
+     <mat-card-actions>
 
-<div class="g_id_signin" data-type="icon" data-shape="square" data-theme="outline" data-text="signin_with"
-     data-size="large" data-locale="en-US">
-</div>
+          <div id="g_id_onload" [attr.data-client_id]="clientId" data-context="signin" data-ux_mode="popup"
+               [attr.data-login_uri]="loginURI" data-auto_prompt="false" data-callback="login">
+          </div>
+
+          <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+               data-text="signin_with" data-size="large" data-logo_alignment="left">
+          </div>
+     </mat-card-actions>
+</mat-card>

@@ -26,3 +26,7 @@ mat-card-content {
   display: flex;
   justify-content: flex-end;
 }
+
+.example-card {
+  max-width: 400px;
+}
