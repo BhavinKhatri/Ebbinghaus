@@ -1,19 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { IUserStore } from '../interfaces/IUserStore';
+import { IUserDto } from '../interfaces';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './schemas/user.schema';
+import { Model } from 'mongoose';
 
 // This should be a real class/interface representing a user entity
-export type User = any;
 
 @Injectable()
-export class UsersService {
-  private users = [];
-
-  async findOne(userId: string): Promise<User | undefined> {
-    return this.users.find((user) => user.userId === userId);
+export class UsersService implements IUserStore {
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  async add(user: IUserDto): Promise<User> {
+    const createdUser = new this.userModel(user);
+    return createdUser.save();
   }
 
-  addUser(user) {
-    user.id = this.users.length.toString();
-    user.authId = user.userId;
-    this.users.push(user);
+  async findOne(userId: string): Promise<User | undefined> {
+    const user = this.userModel.findOne({
+      userId: userId,
+    });
+    return user;
   }
 }

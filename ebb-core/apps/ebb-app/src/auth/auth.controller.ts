@@ -10,7 +10,7 @@ export class AuthController {
   async googleAuthRedirect(@Request() req) {
     const user = await this.userService.findOne(req.userId);
     if (!user) {
-      this.userService.addUser({
+      this.userService.add({
         userId: req.userId,
       });
     }
