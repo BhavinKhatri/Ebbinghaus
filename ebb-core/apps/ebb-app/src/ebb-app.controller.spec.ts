@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EbbAppController } from './ebb-app.controller';
 import { EbbAppService } from './ebb-app.service';
-import { IMemory } from './interfaces/IMemory';
+import { IMemory } from './interfaces/index';
 import { PersistentMemory } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
 import { EbbinghausAlgorithm } from './classes/EbbinghausAlgorithm';

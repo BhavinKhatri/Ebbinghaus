@@ -4,12 +4,14 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private localStorage: LocalStorageService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
-    const authToken = localStorage.getItem('token') ?? '';
+    const authToken = this.localStorage.getItem('token') ?? '';
 
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.

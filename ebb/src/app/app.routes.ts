@@ -1,17 +1,16 @@
 import { Route } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { AuthGuard } from './auth.guard';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'welcome',
     pathMatch: 'full',
   },
   {
     path: 'welcome',
     loadComponent: () => NxWelcomeComponent,
-    canActivate: [AuthGuard],
+    canActivate: [],
   },
   {
     path: 'auth',

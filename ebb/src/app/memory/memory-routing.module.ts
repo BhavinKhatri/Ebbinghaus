@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () => MemoryListComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 ];
 
