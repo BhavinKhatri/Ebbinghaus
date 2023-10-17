@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,10 +23,11 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     RouterModule,
     CommonModule,
-    RouterModule,
   ],
 })
 export class NavigationComponent {
+  @Input() isLoggedIn!: boolean;
+  @Output() logoutUser: EventEmitter<void> = new EventEmitter();
   private breakpointObserver = inject(BreakpointObserver);
   constructor(private router: Router) {}
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -37,5 +38,9 @@ export class NavigationComponent {
     );
   goToLogin() {
     this.router.navigate(['auth']);
+  }
+
+  onLogoutUser() {
+    this.logoutUser.emit();
   }
 }

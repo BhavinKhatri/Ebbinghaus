@@ -11,6 +11,13 @@ export class ServerLocalStorageService implements Storage {
   private localStore!: KeyValue<string, string>[];
   constructor() {
     this.localStore = [];
+    if (localStorage) {
+      let token = localStorage.getItem('token');
+      this.localStore.push({
+        key: 'token',
+        value: token ?? '',
+      });
+    }
   }
   clear(): void {
     this.localStore.length = 0;

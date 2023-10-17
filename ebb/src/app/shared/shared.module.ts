@@ -9,14 +9,12 @@ import { MatCardModule } from '@angular/material/card';
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
   ],
   exports: [
     CommonModule,
-    HttpClientModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,

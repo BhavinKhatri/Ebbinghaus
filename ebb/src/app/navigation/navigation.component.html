@@ -1,24 +1,41 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" *ngIf="isLoggedIn else nologin">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/memory" routerLinkActive="active">Memories</a>
-      <a mat-list-item routerLink="/welcome" routerLinkActive="active">welcome</a>
+      <a mat-list-item routerLink="/memory" routerLinkActive="active">Today's Memory</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer?.toggle()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>M2Memorize</span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="goToLogin()">
-        <mat-icon>login</mat-icon>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+        (click)="onLogoutUser()">
+        <mat-icon>logout</mat-icon>
       </button>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #nologin>
+  <mat-sidenav-container class="sidenav-container" *ngIf="!isLoggedIn">
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <span>M2Memorize</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+          (click)="goToLogin()">
+          <mat-icon>login</mat-icon>
+        </button>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>

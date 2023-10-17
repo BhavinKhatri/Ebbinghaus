@@ -3,7 +3,10 @@ import { EbbAppModule } from './ebb-app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(EbbAppModule, { cors: true });
+  const app = await NestFactory.create(EbbAppModule);
+  app.enableCors({
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Ebb')

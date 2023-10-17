@@ -1,5 +1,5 @@
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { Component, DestroyRef, Inject } from '@angular/core';
+import { Component, DestroyRef, Inject, NgZone } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoginService } from '../login.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorageService } from 'src/app/local-storage.service';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -26,7 +25,7 @@ export class LoginComponent {
     private router: Router,
     @Inject(DOCUMENT) private readonly doc: Document,
     private desstroyRef: DestroyRef,
-    private localStorage: LocalStorageService
+    private ngZone: NgZone
   ) {
     this.clientId = Environment.GOOGLE_CLIENT_ID;
     this.loginURI = Environment.GOOGLE_LOGIN_URI;
@@ -37,7 +36,9 @@ export class LoginComponent {
         .getUserValidation(user.credential)
         .pipe(takeUntilDestroyed(this.desstroyRef))
         .subscribe(() => {
-          this.addTokenAndRedirect({ idToken: user.credential });
+          this.ngZone.run(() => {
+            this.addTokenAndRedirect();
+          });
         });
     };
 
@@ -50,14 +51,14 @@ export class LoginComponent {
             .pipe(takeUntilDestroyed(this.desstroyRef))
             .subscribe(() => {
               this.loginService.userSubject.next(user);
-              this.addTokenAndRedirect(user);
+              this.addTokenAndRedirect();
             });
         }
       });
   }
 
-  private addTokenAndRedirect(user: { idToken: string }) {
-    this.localStorage.setItem('token', user.idToken);
+  private addTokenAndRedirect() {
+    this.loginService.isUserLoggedIn.next(true);
     this.router.navigate(['welcome']);
   }
 }
