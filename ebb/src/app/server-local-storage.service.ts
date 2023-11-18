@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -9,13 +9,14 @@ export class ServerLocalStorageService implements Storage {
     return this.localStore.length;
   }
   private localStore!: KeyValue<string, string>[];
-  constructor() {
+  constructor(@Optional() @Inject('REQUEST') private request: any) {
     this.localStore = [];
-    if (localStorage) {
-      let token = localStorage.getItem('token');
+    console.log('request user');
+    if (this.request) {
+      const { token } = this.request.session.user;
       this.localStore.push({
         key: 'token',
-        value: token ?? '',
+        value: token,
       });
     }
   }

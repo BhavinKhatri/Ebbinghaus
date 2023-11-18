@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { MatCardModule } from '@angular/material/card';
@@ -16,16 +15,13 @@ import { LoginService } from '../login.service';
 })
 export class LogoutComponent {
   constructor(
-    private socialAuthService: SocialAuthService,
     private router: Router,
     private localStorage: LocalStorageService,
     private loginService: LoginService
   ) {}
   onLogout() {
-    this.socialAuthService.signOut().then(() => {
-      this.localStorage.clear();
-      this.loginService.isUserLoggedIn.next(false);
-      this.router.navigate(['welcome']);
-    });
+    this.localStorage.clear();
+    this.loginService.isUserLoggedIn.next(false);
+    this.router.navigate(['welcome']);
   }
 }

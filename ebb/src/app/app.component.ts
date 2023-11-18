@@ -1,4 +1,9 @@
-import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  inject,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
 import { isPlatformBrowser } from '@angular/common';
@@ -18,7 +23,7 @@ export class AppComponent implements OnInit {
   constructor(
     private localStorageService: LocalStorageService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
   ) {
     this.localStorageService.isBrowser.set(
       isPlatformBrowser(inject(PLATFORM_ID))
