@@ -30,6 +30,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/ebb-app/tsconfig.app.json"
       }
+    },
+    "api-dto": {
+      "type": "library",
+      "root": "libs/api-dto",
+      "entryFile": "index",
+      "sourceRoot": "libs/api-dto",
+      "compilerOptions": {
+        "tsConfigPath": "libs/api-dto/tsconfig.lib.json"
+      }
     }
   }
 }

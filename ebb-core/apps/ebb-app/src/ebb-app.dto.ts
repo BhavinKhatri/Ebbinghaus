@@ -1,14 +1,10 @@
-import { MemoryPostRequest, MemoryPostResponse } from './api';
+import { MemoryPostRequest } from '@ebb/api-dto/memory-dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IStatefulMemory } from './interfaces/IMemory';
 
 export class MemoryPostDto implements MemoryPostRequest {
   @ApiPropertyOptional()
   userId: string;
-  memory: string;
-}
-
-export class MemoryPostDtoResponse implements MemoryPostResponse {
   memory: string;
 }
 

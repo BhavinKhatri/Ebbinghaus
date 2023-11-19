@@ -17,6 +17,13 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@ebb/api-dto": [
+        "libs/api-dto/src"
+      ],
+      "@ebb/api-dto/*": [
+        "libs/api-dto/src/*"
+      ]
+    }
   }
 }

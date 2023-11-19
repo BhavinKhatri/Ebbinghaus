@@ -1,8 +1,3 @@
-export interface MemoryPostRequest {
-  userId: string;
-  memory: string;
-}
-
 export interface IPaceRepeatedMemory {
   revisionCounts: number;
   /// UTC numbner

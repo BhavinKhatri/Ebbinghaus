@@ -10,11 +10,7 @@ import { EbbAppService } from './ebb-app.service';
 import { IMemory } from './interfaces/IMemory';
 import { AuthGuard } from './auth/auth.guard';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import {
-  MemoriesDto,
-  MemoryPostDto,
-  MemoryPostDtoResponse,
-} from './ebb-app.dto';
+import { MemoriesDto, MemoryPostDto } from './ebb-app.dto';
 
 @Controller('memory')
 export class EbbAppController {
@@ -40,7 +36,7 @@ export class EbbAppController {
     },
   })
   @Post('create')
-  createMemory(@Body() req: MemoryPostDto): MemoryPostDtoResponse {
+  createMemory(@Body() req: MemoryPostDto): MemoryPostDto {
     const today = new Date();
     const utcDateForToday = Date.UTC(
       today.getUTCFullYear(),
