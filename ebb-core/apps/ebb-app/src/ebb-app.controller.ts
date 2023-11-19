@@ -11,7 +11,7 @@ import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 @Controller('memory')
 export class EbbAppController {
-  constructor(private readonly ebbAppService: EbbAppService<string>) {}
+  constructor(private readonly ebbAppService: EbbAppService) {}
 
   @Get('today')
   @ApiBearerAuth()
@@ -19,8 +19,8 @@ export class EbbAppController {
   @ApiOperation({
     summary: 'Gets a list of memories',
   })
-  getTodaysMemories(@Request() req: { userId: string }) {
-    const allMemories = this.ebbAppService.getMemories(req.userId);
+  async getTodaysMemories(@Request() req: { userId: string }) {
+    const allMemories = await this.ebbAppService.getMemories(req.userId);
     return new MemoriesDto(allMemories);
   }
 
@@ -30,8 +30,8 @@ export class EbbAppController {
   @ApiOperation({
     summary: 'Gets a list of memories',
   })
-  getAllMemories(@Request() req: { userId: string }) {
-    const allMemories = this.ebbAppService.getAllMemories(req.userId);
+  async getAllMemories(@Request() req: { userId: string }) {
+    const allMemories = await this.ebbAppService.getAllMemories(req.userId);
     return new MemoriesDto(allMemories);
   }
 

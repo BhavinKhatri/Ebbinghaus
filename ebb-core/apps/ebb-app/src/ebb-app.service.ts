@@ -2,38 +2,35 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IMemory, IStatefulMemory } from '@ebb/api-dto/core/memory';
 import { MemoryModifier } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
-import { MemoryArrayStore } from './data-stores/memory-store';
-import { IMemoryStore } from './interfaces/IMemoryStore';
+import { MemoryStore } from './data-stores/memory-store';
 import { DateService } from './utils/date/date.service';
 
 @Injectable()
-export class EbbAppService<T> {
-  private memoryStore: IMemoryStore<T>;
+export class EbbAppService {
   constructor(
     @Inject(DateService) private dateService: DateService,
     @Inject(IPaceRepeatedAlgorithm)
     private paceRepeatedAlgorithm: IPaceRepeatedAlgorithm,
-  ) {
-    this.memoryStore = new MemoryArrayStore();
-  }
+    @Inject(MemoryStore) private memoryStore: MemoryStore,
+  ) {}
 
-  create(memory: IMemory<T>, userId: string) {
+  create(memory: IMemory<string>, userId: string) {
     this.memoryStore.add(memory, userId);
   }
 
-  getMemories(userId: string): IStatefulMemory<T>[] {
-    const allMemories = this.memoryStore.getAllMemories(userId);
+  async getMemories(userId: string): Promise<IStatefulMemory<string>[]> {
+    const allMemories = await this.memoryStore.getAllMemories(userId);
     return this.paceRepeatedAlgorithm.getMemoriesForRepeatation(
       allMemories,
-    ) as IStatefulMemory<T>[];
+    ) as IStatefulMemory<string>[];
   }
 
-  getAllMemories(userId: string): IStatefulMemory<T>[] {
+  async getAllMemories(userId: string): Promise<IStatefulMemory<string>[]> {
     return this.memoryStore.getAllMemories(userId);
   }
 
-  revisionComplete(persistentMemoryId: string) {
-    const m = this.memoryStore.getMemoryById(persistentMemoryId);
+  async revisionComplete(persistentMemoryId: string) {
+    const m = await this.memoryStore.getMemoryById(persistentMemoryId);
     const mm = new MemoryModifier(m);
     const today = this.dateService.todayAsUTC;
     mm.updateRevisionCount(today);
