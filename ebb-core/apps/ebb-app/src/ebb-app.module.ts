@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MemoryStore } from './data-stores/memory-store';
 import { UserMemory, MemorySchema } from './data-stores/schemas/memory.schema';
+import { IMemoryStore } from './interfaces';
 
 @Module({
   imports: [
@@ -23,7 +24,10 @@ import { UserMemory, MemorySchema } from './data-stores/schemas/memory.schema';
   ],
   controllers: [EbbAppController],
   providers: [
-    MemoryStore,
+    {
+      provide: IMemoryStore,
+      useClass: MemoryStore,
+    },
     DateService,
     EbbAppService,
     {

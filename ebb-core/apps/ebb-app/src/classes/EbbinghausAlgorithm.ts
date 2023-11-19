@@ -15,7 +15,7 @@ export class EbbinghausAlgorithm implements IPaceRepeatedAlgorithm {
   /// 6 - Skip 8 days after previous day, Total 21 days after starting days
   /// 7 - Skip 13 days after previous day Total - days after starting days
   constructor(private dateService: DateService) {}
-  private paceSequenceInDays = [0, 1, 2, 5, 8, 13, 21];
+  private paceSequenceInDays = [-1, 0, 1, 2, 5, 8, 13, 21];
   getMemoriesForRepeatation(memories: IPaceRepeatedMemory[]) {
     return memories.filter((m) => {
       if (this.paceSequenceInDays.length > m.revisionCounts) {

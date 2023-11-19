@@ -6,3 +6,5 @@ export interface IMemoryStore<T> {
   getMemoryById: (id: string) => Promise<IStatefulMemory<T>>;
   updateMemory: (sm: IStatefulMemory<T>) => IStatefulMemory<T>;
 }
+
+export const IMemoryStore = Symbol('IMemoryStore');

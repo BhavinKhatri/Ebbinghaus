@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IMemory, IStatefulMemory } from '@ebb/api-dto/core/memory';
 import { MemoryModifier } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
-import { MemoryStore } from './data-stores/memory-store';
 import { DateService } from './utils/date/date.service';
+import { IMemoryStore } from './interfaces';
 
 @Injectable()
 export class EbbAppService {
@@ -11,7 +11,7 @@ export class EbbAppService {
     @Inject(DateService) private dateService: DateService,
     @Inject(IPaceRepeatedAlgorithm)
     private paceRepeatedAlgorithm: IPaceRepeatedAlgorithm,
-    @Inject(MemoryStore) private memoryStore: MemoryStore,
+    @Inject(IMemoryStore) private memoryStore: IMemoryStore<string>,
   ) {}
 
   create(memory: IMemory<string>, userId: string) {
