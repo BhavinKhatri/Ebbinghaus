@@ -28,6 +28,10 @@ export class EbbAppService<T> {
     ) as IStatefulMemory<T>[];
   }
 
+  getAllMemories(userId: string): IStatefulMemory<T>[] {
+    return this.memoryStore.getAllMemories(userId);
+  }
+
   revisionComplete(persistentMemoryId: string) {
     const m = this.memoryStore.getMemoryById(persistentMemoryId);
     const mm = new MemoryModifier(m);

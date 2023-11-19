@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  Request,
-  Body,
-} from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { EbbAppService } from './ebb-app.service';
 import {
   MemoriesDto,
@@ -20,6 +13,17 @@ import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 export class EbbAppController {
   constructor(private readonly ebbAppService: EbbAppService<string>) {}
 
+  @Get('today')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: 'Gets a list of memories',
+  })
+  getTodaysMemories(@Request() req: { userId: string }) {
+    const allMemories = this.ebbAppService.getMemories(req.userId);
+    return new MemoriesDto(allMemories);
+  }
+
   @Get('all')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
@@ -27,7 +31,7 @@ export class EbbAppController {
     summary: 'Gets a list of memories',
   })
   getAllMemories(@Request() req: { userId: string }) {
-    const allMemories = this.ebbAppService.getMemories(req.userId);
+    const allMemories = this.ebbAppService.getAllMemories(req.userId);
     return new MemoriesDto(allMemories);
   }
 
@@ -40,7 +44,10 @@ export class EbbAppController {
     },
   })
   @Post('create')
-  createMemory(@Body() req: MemoryPostRequest): MemoryPostResponse {
+  createMemory(
+    @Request() req: { userId: string; body: MemoryPostRequest },
+  ): MemoryPostResponse {
+    const { body } = req;
     const today = new Date();
     const utcDateForToday = Date.UTC(
       today.getUTCFullYear(),
@@ -49,10 +56,10 @@ export class EbbAppController {
     );
     const memory: IMemory<string> = {
       createdAt: utcDateForToday,
-      memory: req.memory,
+      memory: body.memory,
     };
     this.ebbAppService.create(memory, req.userId);
-    return req;
+    return req.body;
   }
 
   @UseGuards(AuthGuard)

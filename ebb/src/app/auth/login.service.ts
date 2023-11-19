@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/local-storage.service';
 import { Amplify } from 'aws-amplify';
@@ -107,12 +107,14 @@ export class LoginService {
         },
       },
     });
+    const token = this.localStorageService.getItem('token');
+    this.isUserLoggedIn.next(!!token);
   }
   userSubject: BehaviorSubject<{ token: string }> = new BehaviorSubject({
     token: '',
   });
   currentUser$ = this.userSubject.asObservable();
-  isUserLoggedIn: Subject<boolean> = new Subject();
+  isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject(false);
   onLogginChange$ = this.isUserLoggedIn.asObservable();
   getUserValidation() {
     return !!this.localStorageService.getItem('token');

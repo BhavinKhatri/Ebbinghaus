@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EbbAppController } from './ebb-app.controller';
 import { EbbAppService } from './ebb-app.service';
-import { IMemory } from './interfaces/index';
+import { IMemory } from 'libs/api-dto/src/core';
 import { PersistentMemory } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
 import { EbbinghausAlgorithm } from './classes/EbbinghausAlgorithm';
@@ -43,10 +43,6 @@ describe('EbbAppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(ebbAppController.getHello()).toBe('Hello World!');
-    });
-
     it('should get the revision on 2nd day after creation"', () => {
       const memory: IMemory<string> = {
         createdAt: 0,

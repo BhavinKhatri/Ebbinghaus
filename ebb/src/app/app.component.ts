@@ -15,9 +15,9 @@ export class AppComponent implements OnInit {
   isUserSignedIn!: boolean;
   constructor(private router: Router, private loginService: LoginService) {}
   ngOnInit(): void {
-    if (this.loginService.getUserValidation()) {
-      this.isUserSignedIn = true;
-    }
+    this.loginService.isUserLoggedIn.subscribe((isLoggedIn) => {
+      this.isUserSignedIn = isLoggedIn;
+    });
   }
 
   onLogOut() {
