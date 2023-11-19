@@ -9,6 +9,7 @@ import {
   CredentialsAndIdentityIdProvider,
   CredentialsAndIdentityId,
 } from 'aws-amplify/auth';
+import { jwtDecode } from 'jwt-decode';
 
 // Note: This example requires installing `@aws-sdk/client-cognito-identity` to obtain Cognito credentials
 // npm i @aws-sdk/client-cognito-identity
@@ -120,10 +121,6 @@ export class LoginService {
     return !!this.localStorageService.getItem('token');
   }
 
-  setSession() {
-    return this.httpClient.get(`${Environment.APP_BASE_URL}/session`);
-  }
-
   async signInWithGoogle() {
     if (window.google?.accounts) {
       window.google.accounts.id.initialize({
@@ -136,6 +133,7 @@ export class LoginService {
           const fetchSessionResult = await fetchAuthSession(); // will return the credentials
           console.log('fetchSessionResult: ', fetchSessionResult);
           this.localStorageService.setItem('token', response.credential);
+          this.localStorageService.expTime = jwtDecode(response.credential);
           this.userSubject.next({
             token: response.credential,
           });

@@ -1,8 +1,8 @@
 import { Injectable, inject, signal, effect } from '@angular/core';
+import { KeyValue } from '@angular/common';
 import { ServerLocalStorageService } from './server-local-storage.service';
 import { BrowserLocalStorageService } from './browser-local-storage.service';
-import { KeyValue } from '@angular/common';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,7 @@ export class LocalStorageService {
   private localStore!: Storage;
   isBrowser = signal(false);
   storageType = 'server';
+  expTime!: number;
   constructor(private browserLocalStorageService: BrowserLocalStorageService) {
     this.localStore = inject(ServerLocalStorageService);
     effect(() => {
@@ -55,5 +56,23 @@ export class LocalStorageService {
   }
   setItem(key: string, value: string): void {
     this.localStore.setItem(key, value);
+  }
+
+  setTokenExpTime() {
+    const token = this.getItem('token');
+    if (token) {
+      const { exp } = jwtDecode(token);
+      this.expTime = exp ?? 0;
+    }
+  }
+
+  get isTokenExpired() {
+    let isJwtExpired = false;
+    const currentTime = new Date().getTime() / 1000;
+
+    if (this.expTime) {
+      if (currentTime > this.expTime) isJwtExpired = true;
+    }
+    return isJwtExpired;
   }
 }
