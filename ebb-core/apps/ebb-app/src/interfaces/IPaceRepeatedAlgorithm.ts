@@ -1,4 +1,4 @@
-import { IPaceRepeatedMemory } from './IMemory';
+import { IPaceRepeatedMemory } from 'libs/api-dto/src/core';
 
 export interface IPaceRepeatedAlgorithm {
   getMemoriesForRepeatation: (

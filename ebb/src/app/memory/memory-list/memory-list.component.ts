@@ -2,9 +2,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MemoryListDataSource, MemoryListItem } from './memory-list-datasource';
+import { MemoryListDataSource } from './memory-list-datasource';
 import { MatButtonModule } from '@angular/material/button';
-import { IStatefulMemory } from './api';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf } from '@angular/common';
 import {
@@ -16,6 +15,8 @@ import {
 } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { MemoryDto } from '@rectrix/ebb-api-dto';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-memory-list',
@@ -34,15 +35,19 @@ import { of } from 'rxjs';
 export class MemoryListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<MemoryListItem>;
+  @ViewChild(MatTable) table!: MatTable<MemoryDto<string>>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns: string[] = ['number', 'title'];
-  data: IStatefulMemory<string>[] = [];
+  data: MemoryDto<string>[] = [];
   resultsLength = 0;
   isLoadingResults!: boolean;
   memoryListDataSource!: MemoryListDataSource | null;
-  constructor(private _httpClient: HttpClient) {
+  constructor(
+    private _httpClient: HttpClient,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.isLoadingResults = true;
   }
 
@@ -87,6 +92,9 @@ export class MemoryListComponent implements AfterViewInit {
   }
 
   addData() {
+    this.router.navigate(['add'], {
+      relativeTo: this.activatedRoute,
+    });
     console.log('add data');
   }
 }

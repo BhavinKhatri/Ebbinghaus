@@ -1,14 +1,8 @@
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
-import { IStatefulMemory } from './api';
+import { MemoriesDto } from '@rectrix/ebb-api-dto';
 import { HttpClient } from '@angular/common/http';
 import { Environment } from 'src/environments/environment';
-
-// TODO: Replace this with your own data model type
-export interface MemoryListItem {
-  name: string;
-  id: number;
-}
 
 /**
  * Data source for the MemoryList view. This class should
@@ -21,9 +15,9 @@ export class MemoryListDataSource {
     sort?: string,
     order?: SortDirection,
     page?: number
-  ): Observable<{ memories: IStatefulMemory<string>[] }> {
+  ): Observable<MemoriesDto<string>> {
     const href = `${Environment.APP_URL}/memory/all`;
 
-    return this._httpClient.get<{ memories: IStatefulMemory<string>[] }>(href);
+    return this._httpClient.get<MemoriesDto<string>>(href);
   }
 }

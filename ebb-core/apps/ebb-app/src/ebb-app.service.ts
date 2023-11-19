@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IMemory, IStatefulMemory } from './interfaces/IMemory';
+import { IMemory, IStatefulMemory } from '@ebb/api-dto/core/memory';
 import { MemoryModifier } from './classes/PersistentMemory';
 import { IPaceRepeatedAlgorithm } from './interfaces/IPaceRepeatedAlgorithm';
 import { MemoryArrayStore } from './data-stores/memory-store';

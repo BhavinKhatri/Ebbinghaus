@@ -1,12 +1,4 @@
-import { MemoryPostRequest } from '@ebb/api-dto/memory-dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IStatefulMemory } from './interfaces/IMemory';
-
-export class MemoryPostDto implements MemoryPostRequest {
-  @ApiPropertyOptional()
-  userId: string;
-  memory: string;
-}
+import { IStatefulMemory } from './core';
 
 export interface MemoryDto<T> {
   id: string;

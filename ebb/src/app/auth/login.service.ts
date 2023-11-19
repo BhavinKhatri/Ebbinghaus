@@ -58,10 +58,9 @@ class CustomCredentialsProvider implements CredentialsAndIdentityIdProvider {
         };
         return credentials;
       }
-      const a: Promise<undefined> = new Promise((_) => {
+      return new Promise((_) => {
         return undefined;
-      });
-      return a;
+      }) as Promise<undefined>;
     } catch (e) {
       console.log('Error getting credentials: ', e);
     }
@@ -115,9 +114,8 @@ export class LoginService {
   currentUser$ = this.userSubject.asObservable();
   isUserLoggedIn: Subject<boolean> = new Subject();
   onLogginChange$ = this.isUserLoggedIn.asObservable();
-  getUserValidation(token: string) {
-    this.localStorageService.setItem('token', token);
-    return this.httpClient.get(`${Environment.APP_URL}/auth/user`);
+  getUserValidation() {
+    return !!this.localStorageService.getItem('token');
   }
 
   setSession() {

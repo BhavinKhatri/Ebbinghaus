@@ -1,13 +1,6 @@
-import {
-  Component,
-  OnInit,
-  PLATFORM_ID,
-  inject,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
-import { isPlatformBrowser } from '@angular/common';
-import { LocalStorageService } from './local-storage.service';
 import { LoginService } from './auth/login.service';
 
 @Component({
@@ -20,19 +13,11 @@ import { LoginService } from './auth/login.service';
 export class AppComponent implements OnInit {
   title = 'M2Memorize';
   isUserSignedIn!: boolean;
-  constructor(
-    private localStorageService: LocalStorageService,
-    private router: Router,
-    private loginService: LoginService,
-  ) {
-    this.localStorageService.isBrowser.set(
-      isPlatformBrowser(inject(PLATFORM_ID))
-    );
-  }
+  constructor(private router: Router, private loginService: LoginService) {}
   ngOnInit(): void {
-    this.loginService.onLogginChange$.subscribe((isLoggedIn) => {
-      this.isUserSignedIn = isLoggedIn;
-    });
+    if (this.loginService.getUserValidation()) {
+      this.isUserSignedIn = true;
+    }
   }
 
   onLogOut() {

@@ -1,5 +1,5 @@
 import { UsersMemory } from '../classes/PersistentMemory';
-import { IMemory, IStatefulMemory } from '../interfaces/IMemory';
+import { IMemory, IStatefulMemory } from '@ebb/api-dto/core/memory';
 import { IMemoryStore } from '../interfaces/IMemoryStore';
 
 export class MemoryArrayStore<T> implements IMemoryStore<T> {
@@ -14,7 +14,7 @@ export class MemoryArrayStore<T> implements IMemoryStore<T> {
   }
   private memoryList: UsersMemory<T>[] = [];
   add(memory: IMemory<T>, userId: string) {
-    const um = new UsersMemory(memory, userId);
+    const um = new UsersMemory<T>(memory, userId);
     um.id = this.memoryList.length.toString();
     this.memoryList.push(um);
     return um;

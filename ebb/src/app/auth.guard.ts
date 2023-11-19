@@ -19,6 +19,10 @@ export class AuthGuard {
     | boolean
     | UrlTree {
     if (isPlatformBrowser(this.platformId)) {
+      // if localstorage is not of browser storage then swap it
+      if (this.localStorage.storageType === 'server') {
+        this.localStorage.storageSwapToBrowser();
+      }
       const token = this.localStorage.getItem('token');
       if (!token) {
         this.router.navigate(['/auth']);

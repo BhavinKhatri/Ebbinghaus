@@ -1,5 +1,5 @@
 import { IPaceRepeatedAlgorithm } from '../interfaces/IPaceRepeatedAlgorithm';
-import { IPaceRepeatedMemory } from '../interfaces/IMemory';
+import { IPaceRepeatedMemory } from '@ebb/api-dto/core';
 import { DateService } from '../utils/date/date.service';
 import { Injectable } from '@nestjs/common';
 

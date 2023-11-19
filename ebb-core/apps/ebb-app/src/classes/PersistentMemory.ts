@@ -3,7 +3,7 @@ import {
   IStatefulMemory,
   IUpdatMemory,
   IUsersMemory,
-} from '../interfaces/IMemory';
+} from '@ebb/api-dto/core';
 
 export class PersistentMemory<T> implements IStatefulMemory<T> {
   id: string;
