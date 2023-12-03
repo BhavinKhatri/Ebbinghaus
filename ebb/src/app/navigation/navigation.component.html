@@ -1,4 +1,5 @@
-<mat-sidenav-container class="sidenav-container" *ngIf="isLoggedIn else nologin">
+@if(isLoggedIn) {
+<mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
@@ -22,20 +23,21 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<ng-template #nologin>
-  <mat-sidenav-container class="sidenav-container" *ngIf="!isLoggedIn">
-    <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <span>M2Memorize</span>
-        <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
-          (click)="goToLogin()">
-          <mat-icon>login</mat-icon>
-        </button>
-      </mat-toolbar>
-      <!-- Add Content Here -->
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</ng-template>
+} @else {
+  @if(!isLoggedIn){
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav-content>
+        <mat-toolbar color="primary">
+          <span>M2Memorize</span>
+          <span class="example-spacer"></span>
+          <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+            (click)="goToLogin()">
+            <mat-icon>login</mat-icon>
+          </button>
+        </mat-toolbar>
+        <!-- Add Content Here -->
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  }
+}

@@ -8,9 +8,11 @@
         <div class="col">
           <mat-form-field class="full-width">
             <textarea matInput placeholder="Memory" formControlName="memory"></textarea>
-            <mat-error *ngIf="memoryForm.controls['memory'].hasError('required')">
-              Text is <strong>required</strong>
-            </mat-error>
+            @if(memoryForm.controls['memory'].hasError('required')){
+              <mat-error>
+                Text is <strong>required</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </div>
