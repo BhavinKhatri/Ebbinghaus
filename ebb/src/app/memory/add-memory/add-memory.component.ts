@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { AddMemoryService } from './add-memory.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +17,6 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatButtonModule,
     MatCardModule,
     ReactiveFormsModule,
-    NgIf,
   ],
 })
 export class AddMemoryComponent {

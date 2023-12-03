@@ -5,7 +5,6 @@ import { MatSortModule, MatSort } from '@angular/material/sort';
 import { MemoryListDataSource } from './memory-list-datasource';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgIf } from '@angular/common';
 import {
   catchError,
   map,
@@ -29,7 +28,6 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatSortModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    NgIf,
   ],
 })
 export class MemoryListComponent implements AfterViewInit {
@@ -38,11 +36,11 @@ export class MemoryListComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<MemoryDto<string>>;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns: string[] = ['number', 'title'];
+  displayedColumns: string[] = ['number', 'title', 'actions'];
   data: MemoryDto<string>[] = [];
   resultsLength = 0;
   isLoadingResults!: boolean;
-  memoryListDataSource!: MemoryListDataSource | null;
+  memoryListDataSource!: MemoryListDataSource;
   constructor(
     private _httpClient: HttpClient,
     private router: Router,
@@ -62,7 +60,7 @@ export class MemoryListComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.memoryListDataSource!.getMemories(
+          return this.memoryListDataSource.getMemories(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -96,5 +94,13 @@ export class MemoryListComponent implements AfterViewInit {
       relativeTo: this.activatedRoute,
     });
     console.log('add data');
+  }
+
+  deleteRow(row: string) {
+    console.log(row);
+  }
+
+  editRow(row:string) {
+    console.log(row);
   }
 }
