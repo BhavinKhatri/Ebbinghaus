@@ -64,8 +64,9 @@ export class EbbAppController {
 
   @UseGuards(AuthGuard)
   @Get('revision-today')
-  revisionForToday(@Request() req) {
-    return this.ebbAppService.getMemories(req.userId);
+  async revisionForToday(@Request() req) {
+    const memoryForRevision = await this.ebbAppService.getMemories(req.userId);
+    return new MemoriesDto(memoryForRevision);
   }
 
   @UseGuards(AuthGuard)

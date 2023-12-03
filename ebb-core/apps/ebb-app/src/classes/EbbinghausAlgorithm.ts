@@ -25,7 +25,12 @@ export class EbbinghausAlgorithm implements IPaceRepeatedAlgorithm {
           m.createdAt,
           daysToSkipFromCreatedDate,
         );
-        return isSameDay;
+        const isTodayAfterSkippedDate =
+          this.dateService.isDateBeforeTheSkippedDay(
+            m.createdAt,
+            daysToSkipFromCreatedDate,
+          );
+        return isSameDay || isTodayAfterSkippedDate;
       }
       return false;
     });

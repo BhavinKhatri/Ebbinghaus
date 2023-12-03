@@ -16,7 +16,7 @@ export class MemoryListDataSource {
     order?: SortDirection,
     page?: number
   ): Observable<MemoriesDto<string>> {
-    const href = `${Environment.APP_URL}/memory/all`;
+    const href = `${Environment.APP_URL}/memory/revision-today`;
 
     return this._httpClient.get<MemoriesDto<string>>(href);
   }

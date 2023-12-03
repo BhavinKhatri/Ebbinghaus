@@ -14,4 +14,11 @@ export class DateService {
     const todayAsUtc = dayjs.utc();
     return todayAsUtc.isSame(utcDateAfterSkip, 'day');
   }
+
+  isDateBeforeTheSkippedDay(utcDateMiliseconds: number, skipCount: number) {
+    const utcCreatedDate = dayjs(new Date(utcDateMiliseconds));
+    const utcDateAfterSkip = utcCreatedDate.add(skipCount + 1, 'day');
+    const todayAsUtc = dayjs.utc();
+    return todayAsUtc.isAfter(utcDateAfterSkip, 'day');
+  }
 }
