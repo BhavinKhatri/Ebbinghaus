@@ -93,7 +93,6 @@ export class MemoryListComponent implements AfterViewInit {
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
     });
-    console.log('add data');
   }
 
   deleteRow(row: string) {
