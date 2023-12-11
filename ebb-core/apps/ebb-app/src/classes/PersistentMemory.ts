@@ -36,4 +36,8 @@ export class MemoryModifier<T> implements IUpdatMemory {
     this.persistentMemory.revisionCounts += 1;
     this.persistentMemory.revisionHistory.push(date);
   }
+
+  updateMemory(memory: T) {
+    this.persistentMemory.memory = memory;
+  }
 }

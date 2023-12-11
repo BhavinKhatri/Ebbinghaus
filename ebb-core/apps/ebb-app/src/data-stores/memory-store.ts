@@ -1,5 +1,9 @@
 import { UsersMemory } from '../classes/PersistentMemory';
-import { IMemory, IUsersMemory } from '@ebb/api-dto/core/memory';
+import {
+  IMemory,
+  IStatefulMemory,
+  IUsersMemory,
+} from '@ebb/api-dto/core/memory';
 import { IMemoryStore } from '../interfaces/IMemoryStore';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
@@ -11,13 +15,27 @@ export class MemoryStore implements IMemoryStore<string> {
   constructor(
     @InjectModel(UserMemory.name) private memoryModel: Model<UserMemory>,
   ) {}
-  updateMemory(sm: IUsersMemory<string>) {
-    this.memoryModel.updateOne(
-      { _id: sm.id },
-      { revisionCounts: sm.revisionCounts },
-      { revisionHistory: sm.revisionHistory },
-    );
-    return sm;
+  updateMemory(sm: IUsersMemory<string>): Promise<IStatefulMemory<string>> {
+    return new Promise((resolver, reject) => {
+      this.memoryModel
+        .updateOne(
+          { _id: sm.id },
+          {
+            $set: {
+              revisionCounts: sm.revisionCounts,
+              revisionHistory: sm.revisionHistory,
+              memory: sm.memory,
+            },
+          },
+        )
+        .then((result) => {
+          if (result.matchedCount > 0) {
+            return resolver(sm);
+          } else {
+            return reject();
+          }
+        });
+    });
   }
   // private memoryList: UsersMemory<T>[] = [];
   async add(memory: IMemory<string>, userId: string) {

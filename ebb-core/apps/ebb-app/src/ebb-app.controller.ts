@@ -1,6 +1,8 @@
 import { Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { EbbAppService } from './ebb-app.service';
 import {
+  CompleteMemoryPostRequest,
+  CompleteMemoryPostResponse,
   MemoriesDto,
   MemoryPostRequest,
   MemoryPostResponse,
@@ -71,7 +73,13 @@ export class EbbAppController {
 
   @UseGuards(AuthGuard)
   @Post('complete')
-  revisionCompleted(memoryId: string) {
-    this.ebbAppService.revisionComplete(memoryId);
+  async revisionCompleted(
+    @Request() req: { userId: string; body: CompleteMemoryPostRequest },
+  ): Promise<CompleteMemoryPostResponse> {
+    const { memory, memoryId } = req.body;
+    const result = await this.ebbAppService.revisionComplete(memoryId, memory);
+    return {
+      isSuccess: !!result.id,
+    };
   }
 }

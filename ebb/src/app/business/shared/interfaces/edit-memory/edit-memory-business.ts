@@ -1,6 +1,6 @@
 import { ISavable } from '../shared/memory-crud';
 
-export interface IAddMemoryBusiness extends ISavable {
+export interface IEditMemoryBusiness extends ISavable {
   isFormValid: boolean;
   memoryData: string;
 }

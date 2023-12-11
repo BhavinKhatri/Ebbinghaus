@@ -29,11 +29,12 @@ export class EbbAppService {
     return this.memoryStore.getAllMemories(userId);
   }
 
-  async revisionComplete(persistentMemoryId: string) {
+  async revisionComplete(persistentMemoryId: string, memory: string) {
     const m = await this.memoryStore.getMemoryById(persistentMemoryId);
     const mm = new MemoryModifier(m);
     const today = this.dateService.todayAsUTC;
     mm.updateRevisionCount(today);
-    this.memoryStore.updateMemory(m);
+    mm.updateMemory(memory);
+    return this.memoryStore.updateMemory(m);
   }
 }

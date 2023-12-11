@@ -1,15 +1,13 @@
 import { Component, inject } from '@angular/core';
 
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AddMemoryService } from './add-memory.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddMemoryBusiness } from 'src/app/business/memory/add-memory';
 import { IRectrixValidator } from 'src/app/business/shared/interfaces';
 import { ValidationType } from 'src/app/business/shared/enums/validation-type';
 import { IAddMemoryBusiness } from 'src/app/business/shared/interfaces/add-memory/add-memory-business';
+import { MemoryCardComponent } from '../shared/memory-card.component';
 
 @Component({
   selector: 'app-add-memory',
@@ -17,10 +15,7 @@ import { IAddMemoryBusiness } from 'src/app/business/shared/interfaces/add-memor
   styleUrls: ['./add-memory.component.less'],
   standalone: true,
   imports: [
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    ReactiveFormsModule,
+    MemoryCardComponent
   ],
 })
 export class AddMemoryComponent implements IAddMemoryBusiness {
