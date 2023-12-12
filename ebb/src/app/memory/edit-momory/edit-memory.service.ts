@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MemoryPostRequest, MemoryPostResponse } from '@rectrix/ebb-api-dto';
+import {
+  CompleteMemoryPostRequest,
+  CompleteMemoryPostResponse,
+} from '@rectrix/ebb-api-dto';
+import { IStatefulMemory } from '@rectrix/ebb-api-dto/src/core';
 import { Environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,14 +12,20 @@ import { Environment } from 'src/environments/environment';
 })
 export class EditMemoryService {
   constructor(private httpClient: HttpClient) {}
-  editMemory(memory: string) {
-    const mpr: MemoryPostRequest = {
+  editMemory(memory: string, memoryId: string) {
+    const mpr: CompleteMemoryPostRequest = {
       memory: memory,
-      userId: '',
+      memoryId: memoryId,
     };
-    return this.httpClient.post<MemoryPostResponse>(
+    return this.httpClient.post<CompleteMemoryPostResponse>(
       `${Environment.APP_URL}/memory/complete`,
       mpr
+    );
+  }
+
+  getMemoryById(memoryId: string) {
+    return this.httpClient.get<IStatefulMemory<string>>(
+      `${Environment.APP_URL}/memory/${memoryId}`
     );
   }
 }

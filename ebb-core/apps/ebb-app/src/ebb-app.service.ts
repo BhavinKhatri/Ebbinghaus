@@ -37,4 +37,8 @@ export class EbbAppService {
     mm.updateMemory(memory);
     return this.memoryStore.updateMemory(m);
   }
+
+  async getMemoryById(memoryId: string) {
+    return this.memoryStore.getMemoryById(memoryId);
+  }
 }

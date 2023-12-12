@@ -5,6 +5,7 @@ import { AuthGuard } from '../auth.guard';
 import { AddMemoryComponent } from './add-memory/add-memory.component';
 import { LocalStorageService } from '../local-storage.service';
 import { isPlatformBrowser } from '@angular/common';
+import { EditMemoryComponent } from './edit-momory/edit-memory.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path: 'add',
     loadComponent: () => AddMemoryComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit/:id',
+    loadComponent: () => EditMemoryComponent,
     canActivate: [AuthGuard],
   },
 ];

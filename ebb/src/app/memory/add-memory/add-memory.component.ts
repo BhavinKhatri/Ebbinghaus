@@ -1,26 +1,25 @@
 import { Component, inject } from '@angular/core';
 
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AddMemoryService } from './add-memory.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddMemoryBusiness } from 'src/app/business/memory/add-memory';
-import { IRectrixValidator } from 'src/app/business/shared/interfaces';
-import { ValidationType } from 'src/app/business/shared/enums/validation-type';
 import { IAddMemoryBusiness } from 'src/app/business/shared/interfaces/add-memory/add-memory-business';
 import { MemoryCardComponent } from '../shared/memory-card.component';
+import { RectrixAngularValidatorMapperPipe } from 'src/app/shared/rectrix-angular-validator-mapper.pipe';
 
 @Component({
   selector: 'app-add-memory',
   templateUrl: './add-memory.component.html',
   styleUrls: ['./add-memory.component.less'],
   standalone: true,
-  imports: [
-    MemoryCardComponent
-  ],
+  imports: [MemoryCardComponent],
+  providers: [RectrixAngularValidatorMapperPipe],
 })
 export class AddMemoryComponent implements IAddMemoryBusiness {
   private fb = inject(FormBuilder);
-  
+  private validationMapper = inject(RectrixAngularValidatorMapperPipe);
+
   constructor(
     private apiService: AddMemoryService,
     private router: Router,
@@ -51,20 +50,10 @@ export class AddMemoryComponent implements IAddMemoryBusiness {
   memoryForm = this.fb.group({
     [this.mfc.controlName]: [
       this.mfc.controlValue,
-      this.getValidators(this.mfc.validators),
+      this.validationMapper.transform(this.mfc.validators),
     ],
   });
   hasUnitNumber = false;
-
-  getValidators(validators: IRectrixValidator[]) {
-    const result: Validators[] = [];
-    validators.forEach((v) => {
-      if (v.type === ValidationType.REQUIRED) {
-        result.push(Validators.required);
-      }
-    });
-    return result;
-  }
 
   onSubmit(): void {
     this.amb.submitMemory(this);

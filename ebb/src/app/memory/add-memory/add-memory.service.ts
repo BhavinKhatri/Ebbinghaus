@@ -11,7 +11,6 @@ export class AddMemoryService {
   addMemory(memory: string) {
     const mpr: MemoryPostRequest = {
       memory: memory,
-      userId: '',
     };
     return this.httpClient.post<MemoryPostResponse>(
       `${Environment.APP_URL}/memory/create`,

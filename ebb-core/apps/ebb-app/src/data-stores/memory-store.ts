@@ -50,8 +50,10 @@ export class MemoryStore implements IMemoryStore<string> {
   }
 
   async getMemoryById(id: string) {
-    return (await this.memoryModel.findById(id).exec()).toObject({
+    const memory = (await this.memoryModel.findById(id).exec()).toObject({
       flattenMaps: true,
-    }) as Promise<IUsersMemory<string>>;
+    });
+    memory.id = memory._id.toString();
+    return memory as IStatefulMemory<string>;
   }
 }

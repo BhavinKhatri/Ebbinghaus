@@ -60,16 +60,18 @@ export class MemoryListComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.memoryListDataSource.getMemories(
-            this.sort.active,
-            this.sort.direction,
-            this.paginator.pageIndex
-          ).pipe(
-            catchError((e) => {
-              console.log(e);
-              return of(null);
-            })
-          );
+          return this.memoryListDataSource
+            .getMemories(
+              this.sort.active,
+              this.sort.direction,
+              this.paginator.pageIndex
+            )
+            .pipe(
+              catchError((e) => {
+                console.log(e);
+                return of(null);
+              })
+            );
         }),
         map((data) => {
           // Flip flag to show that loading has finished.
@@ -99,7 +101,9 @@ export class MemoryListComponent implements AfterViewInit {
     console.log(row);
   }
 
-  editRow(row:string) {
-    console.log(row);
+  editRow(row: MemoryDto<string>) {
+    this.router.navigate(['edit', row.id], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

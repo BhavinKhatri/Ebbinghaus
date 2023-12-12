@@ -82,4 +82,11 @@ export class EbbAppController {
       isSuccess: !!result.id,
     };
   }
+
+  @UseGuards(AuthGuard)
+  @Get('/:id')
+  async getById(@Request() req: { userId: string; params: { id: string } }) {
+    const id = req.params.id;
+    return await this.ebbAppService.getMemoryById(id);
+  }
 }
